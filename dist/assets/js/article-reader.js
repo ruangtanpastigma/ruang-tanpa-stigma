@@ -8,10 +8,20 @@
   const slug = params.get('slug');
   const labels = lang === 'id' ? {
     missing: 'Artikel tidak ditemukan.', back: 'Kembali ke Artikel & Video', article: 'Artikel', video: 'Video',
-    published: 'Dipublikasikan', reviewed: 'Terakhir ditinjau', reviewer: 'Peninjauan', sources: 'Sumber', share: 'Bagikan', copy: 'Salin tautan', copied: 'Tautan disalin.', failed: 'Tautan belum dapat disalin.'
+    published: 'Dipublikasikan', reviewed: 'Terakhir ditinjau', nextReview: 'Tinjauan berikutnya', reviewer: 'Peninjau independen', reviewStatus: 'Status tinjauan',
+    notIndependent: 'Belum ditinjau secara klinis oleh peninjau independen', sources: 'Sumber', share: 'Bagikan', copy: 'Salin tautan', copied: 'Tautan disalin.', failed: 'Tautan belum dapat disalin.'
   } : {
     missing: 'Content not found.', back: 'Back to Articles & Video', article: 'Article', video: 'Video',
-    published: 'Published', reviewed: 'Last reviewed', reviewer: 'Review', sources: 'Sources', share: 'Share', copy: 'Copy link', copied: 'Link copied.', failed: 'The link could not be copied.'
+    published: 'Published', reviewed: 'Last reviewed', nextReview: 'Next review due', reviewer: 'Independent reviewer', reviewStatus: 'Review status',
+    notIndependent: 'Not yet independently clinically reviewed', sources: 'Sources', share: 'Share', copy: 'Copy link', copied: 'Link copied.', failed: 'The link could not be copied.'
+  };
+
+  const reviewStatusLabels = lang === 'id' ? {
+    draft: 'Draf', source_checked: 'Sumber diperiksa', editorial_reviewed: 'Ditinjau editorial — bukan tinjauan klinis',
+    needs_clinical_review: 'Memerlukan tinjauan klinis/kesehatan publik', independently_reviewed: 'Ditinjau independen'
+  } : {
+    draft: 'Draft', source_checked: 'Sources checked', editorial_reviewed: 'Editorially reviewed — not a clinical review',
+    needs_clinical_review: 'Needs clinical/public-health review', independently_reviewed: 'Independently reviewed'
   };
 
   function escapeHtml(value) {
@@ -108,9 +118,55 @@
     return items ? '<div class="sources"><h2>' + labels.sources + '</h2><ul>' + items + '</ul></div>' : '';
   }
 
+  function setMeta(selector, attribute, value) {
+    const element = document.querySelector(selector);
+    if (element && value) element.setAttribute(attribute, value);
+  }
+
+  function updatePageMetadata(post) {
+    const pageUrl = new URL(window.location.href);
+    pageUrl.search = '?slug=' + encodeURIComponent(post.slug);
+    document.title = post.title + ' | Ruang Tanpa Stigma';
+    setMeta('meta[name="description"]', 'content', post.summary);
+    setMeta('meta[property="og:title"]', 'content', post.title + ' | Ruang Tanpa Stigma');
+    setMeta('meta[property="og:description"]', 'content', post.summary);
+    setMeta('meta[property="og:type"]', 'content', 'article');
+    setMeta('meta[property="og:url"]', 'content', pageUrl.href);
+    setMeta('link[rel="canonical"]', 'href', pageUrl.href);
+
+    const otherLanguage = lang === 'id' ? 'en' : 'id';
+    const currentLanguageLink = document.querySelector('.language-switch a[lang="' + lang + '"]');
+    const switchLink = document.querySelector('.language-switch a[lang="' + otherLanguage + '"]');
+    if (currentLanguageLink) currentLanguageLink.setAttribute('href', pageUrl.href);
+    let translationUrl = null;
+    if (switchLink && post.translation_slug) {
+      const relative = lang === 'id' ? '../../en/stories/read/?slug=' : '../../../artikel/baca/?slug=';
+      switchLink.setAttribute('href', relative + encodeURIComponent(post.translation_slug));
+      translationUrl = new URL(relative + encodeURIComponent(post.translation_slug), window.location.href);
+    }
+
+    document.querySelectorAll('link[rel="alternate"][hreflang]').forEach(function (link) {
+      const targetLanguage = link.getAttribute('hreflang');
+      if (targetLanguage === lang) link.setAttribute('href', pageUrl.href);
+      if (targetLanguage === otherLanguage && translationUrl) link.setAttribute('href', translationUrl.href);
+      if (targetLanguage === 'x-default') link.setAttribute('href', lang === 'id' ? pageUrl.href : (translationUrl ? translationUrl.href : pageUrl.href));
+    });
+  }
+
+  function reviewDetails(post) {
+    const status = reviewStatusLabels[post.review_status] || post.review_status || '—';
+    let html = '<div class="review-box"><span class="review-status">' + escapeHtml(labels.reviewStatus) + ': ' + escapeHtml(status) + '</span>';
+    html += '<br><strong>' + labels.reviewed + ':</strong> ' + escapeHtml(formatDate(post.reviewed_at) || '—');
+    if (post.next_review_at) html += '<br><strong>' + labels.nextReview + ':</strong> ' + escapeHtml(formatDate(post.next_review_at));
+    if (post.clinical_review_needed) {
+      html += '<br><strong>' + labels.reviewer + ':</strong> ' + escapeHtml(post.reviewer || labels.notIndependent);
+    }
+    return html + '</div>';
+  }
+
   function render(post) {
     const embed = youtubeEmbed(post.video_url);
-    document.title = post.title + ' | Ruang Tanpa Stigma';
+    updatePageMetadata(post);
     const typeLabel = post.type === 'video' ? labels.video : labels.article;
     root.innerHTML = '<header class="article-header"><div class="article-shell">' +
       '<p class="eyebrow">' + escapeHtml(typeLabel) + '</p><h1>' + escapeHtml(post.title) + '</h1><p class="article-deck">' + escapeHtml(post.summary) + '</p>' +
@@ -118,8 +174,7 @@
       '<div class="article-actions"><button class="action-button" type="button" data-share>' + labels.share + '</button><button class="action-button" type="button" data-copy>' + labels.copy + '</button><span class="share-status" role="status" data-share-status></span></div>' +
       '</div></header><div class="article-body article-shell">' +
       (embed ? '<div class="video-frame"><iframe src="' + embed + '" title="' + escapeHtml(post.title) + '" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>' : '') +
-      markdown(post.body) + sources(post) +
-      '<div class="review-box"><strong>' + labels.reviewed + ':</strong> ' + escapeHtml(formatDate(post.reviewed_at) || '—') + '<br><strong>' + labels.reviewer + ':</strong> ' + escapeHtml(post.reviewer || '—') + '</div></div>';
+      markdown(post.body) + sources(post) + reviewDetails(post) + '</div>';
 
     const status = root.querySelector('[data-share-status]');
     const shareButton = root.querySelector('[data-share]');

@@ -1,43 +1,105 @@
-# Prototype Review Notes
+# Ruang Tanpa Stigma V2 — Review Notes
+
+## Positioning decisions
+
+- The homepage now presents Ruang Tanpa Stigma before its founder.
+- The former public-health portfolio section was removed from both homepages.
+- The About page hierarchy is initiative → mission/audience → values → editorial process → smaller founder section.
+- GPA and résumé-style performance figures were removed from the public website.
+- The initiative is described accurately as independent and not as an NGO, clinical service, diagnostic provider, or emergency service.
+- The Impact page contains no counters or invented results.
+
+## Editorial and evidence controls
+
+- New public Editorial & Evidence Policy pages document source hierarchy, workflow, review status, correction policy and language policy.
+- Major medical pages display sources, last review date, annual/triggered review cycle and the absence of independent clinical review.
+- Article metadata supports review status, next review, clinical-review need and translation pairing.
+- GitHub Pages blocks publication of clinical articles without recorded independent review and a real reviewer.
+- `CHANGELOG.md` begins with V2; it does not invent earlier correction history.
+
+## Health-literacy decisions
+
+- Bahasa Indonesia remains primary and was written as the source language.
+- “Untuk Kamu” now offers six situation-based entry paths.
+- Medical terms are introduced alongside plain-language explanations.
+- U=U remains visible and limited to sexual transmission.
+- Pregnancy, breastfeeding, injecting equipment and treatment interruption are explicitly separated from the U=U sexual-transmission claim.
+- No local service directory was added because locations, hours, cost, eligibility, confidentiality and availability have not been verified.
 
 ## Design decisions
 
-- The visual language is a warm community journal supported by the clarity of a public-health resource.
-- The official logo remains unchanged and is the primary visual anchor.
-- Muted olive and sage carry trust; cream and off-white soften the page; coral is reserved for small moments of emphasis.
-- Editorial serif headings, generous spacing, and compact evidence labels avoid a hospital, pharmaceutical, or generic NGO aesthetic.
-- The article library supports search, category, and format filters without collecting personal or health data.
-- Portfolio material is integrated into the story of the initiative instead of presented as a separate corporate résumé.
-- No stock photography or invented community imagery was introduced.
+- The official logo remains unchanged.
+- Olive/sage, cream, off-white and restrained coral remain the identity.
+- The design uses cards selectively and adds divided editorial lists, large statements, policy reading columns, side notes and whitespace.
+- No AI portraits, stock-community imagery or invented participant photography were added.
+- Intrinsic logo dimensions reduce layout shift without altering the asset.
 
-## Editorial safeguards
+## Medical content still requiring independent review
 
-- Only records marked `published` are included in the deployed website content file.
-- A U=U explainer is included as a draft example and is deliberately hidden until reviewed.
-- Every article can include sources, a review date, and a reviewer field.
-- The dashboard uses Pages CMS with an explicit `draft` / `published` status and writes changes to GitHub.
-- The public repository remains visible, so drafts must never contain personal, identifiable, or sensitive health information.
-- Article bodies are rendered through a deliberately small, escaped Markdown subset with safe HTTP(S) links and images to reduce injection risk.
-- External source links accept only HTTP or HTTPS; YouTube embeds use the privacy-enhanced domain.
+- Belajar HIV / Learn About HIV
+- Mitos & Fakta / Myths & Facts
+- Untuk Kamu / For You
+- Homepage U=U wording in both languages
+- Any future clinical article or video, including the U=U drafts
 
-## Medical content to verify before publication
+Priority review topics:
 
-- Ask a qualified Indonesian HIV clinician or public-health reviewer to approve every clinical statement in both languages.
-- Reconfirm the current Indonesian national HIV clinical guideline; the prototype currently cites KMK HK.01.07/Menkes/90/2019.
-- Verify Indonesian wording and availability for HIV testing, confirmatory testing, window periods, PrEP, PEP, ART, viral-load monitoring, and CD4 testing.
-- Add service directories only after addresses, hours, costs, eligibility, confidentiality practices, update ownership, and referral pathways are confirmed.
-- Preserve the scope of U=U: maintained undetectable viral load means no sexual transmission of HIV. Pregnancy, breastfeeding, shared injecting equipment, and treatment interruption need separate clinical guidance.
-- Establish a named reviewer, review interval, and change log for every clinical page.
-- Verify all English translations independently; translation should not substitute for clinical review.
+- Indonesian testing and confirmatory algorithm;
+- window-period wording by test type;
+- current PrEP and PEP guidance/access;
+- ART, viral-load and CD4 monitoring;
+- U=U terminology and maintained viral suppression;
+- pregnancy, birth and infant-feeding wording;
+- wording that could be interpreted as individual medical advice.
 
-## Technical items before going live
+Current sources checked on 19 September 2026 include the WHO HIV and AIDS fact sheet, UNAIDS U=U publication and the Kementerian Kesehatan RI JDIH page for KMK HK.01.07/Menkes/90/2019, which the JDIH page listed as in force on that date. Source checks do not substitute for independent clinical/public-health review.
 
-- Install the hosted Pages CMS GitHub App with access limited to this repository, then test create, edit, draft, publish, image upload, and video URL flows.
-- Confirm every dashboard save triggers a successful GitHub Pages deployment and that the deployed `posts.json` excludes draft records.
-- Public indexing was enabled after owner approval on 19 September 2026; keep `/admin/` excluded from indexing.
-- Add production-domain canonical URLs, `hreflang`, sitemap, Open Graph URL/image, and a custom 404 page.
-- Test at 320 px, 375 px, 768 px, and desktop widths, plus keyboard-only and screen-reader smoke tests.
+## Accessibility status
 
-## Current privacy boundary
+Implemented:
 
-The prototype contains no analytics, contact form, newsletter form, comments, accounts, cookies set by the site, or sensitive-health-data collection. A YouTube video will contact YouTube only when an embedded video page is opened; a consent-based thumbnail pattern can be added later if stricter privacy is required.
+- skip links and semantic landmarks;
+- visible focus states;
+- labelled navigation and controls;
+- improved mobile-menu focus/escape/outside-click behavior;
+- 44 px language targets;
+- reduced-motion and forced-colors support;
+- intrinsic image dimensions;
+- live status for filtering and sharing;
+- measured AA contrast for principal palette combinations.
+
+Still required:
+
+- NVDA or VoiceOver smoke test;
+- complete keyboard route test;
+- 200% zoom and 400% reflow;
+- text-spacing and high-contrast testing;
+- Android/iOS real-device testing;
+- automated axe/Lighthouse run against all routes;
+- user testing with people who use accessibility features when available.
+
+See `docs/accessibility-audit.md` for the full matrix.
+
+## Privacy and analytics
+
+- No analytics, contact form, newsletter, comments, reader accounts or health-data collection were added.
+- YouTube embeds use the privacy-enhanced domain but are transparently described as an external service.
+- Initial M&E can use manual trackers and aggregate platform data.
+- Any analytics installation requires a separate needs/privacy assessment, approval and policy update.
+
+## M&E status
+
+- A 12-month logic model, indicator table, phases, data-quality process and future outcome-evaluation plan now exist.
+- All proposed numeric targets are labelled as planning targets, not achieved results.
+- Reach and knowledge/attitude targets remain `To be established` until baseline/pilot data exists.
+- Monthly and content-quality CSV trackers are ready for real data.
+- Human-subject research intended for generalizable knowledge is distinguished from programme Monitoring & Evaluation and may require appropriate ethical review.
+
+## Release risks
+
+- Independent medical review is outstanding.
+- Manual accessibility and user testing are outstanding.
+- Pages CMS schema changes and workflow publication gates must be tested on the working branch.
+- SEO metadata and sitemap should be rechecked after any custom-domain change.
+- Search indexing is not immediate and is not guaranteed by publication or sitemap submission.
+- No partner, reach, programme, event or outcome claim should be added without documentation.
