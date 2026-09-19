@@ -1,0 +1,161 @@
+media:
+  - name: article_images
+    label: Gambar artikel
+    input: dist/assets/uploads
+    output: /ruang-tanpa-stigma/assets/uploads
+    rename: safe
+    categories: [image]
+    extensions: [jpg, jpeg, png, webp, gif]
+
+content:
+  - name: content_library
+    label: Artikel & Video
+    type: file
+    path: dist/content/posts.json
+    format: json
+    fields:
+      - name: posts
+        label: Daftar konten
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title} · {lang} · {status}"
+        fields:
+          - name: slug
+            label: Slug
+            type: string
+            required: true
+            description: Gunakan huruf kecil dan tanda hubung, misalnya memahami-u-equals-u.
+            pattern:
+              regex: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              message: Gunakan hanya huruf kecil, angka, dan tanda hubung.
+          - name: lang
+            label: Bahasa
+            type: select
+            required: true
+            default: id
+            options:
+              values:
+                - name: id
+                  label: Bahasa Indonesia
+                - name: en
+                  label: English
+          - name: status
+            label: Status
+            type: select
+            required: true
+            default: draft
+            description: Draf tidak ditampilkan di website. Publikasikan hanya setelah pemeriksaan editorial dan, untuk materi klinis, peninjauan profesional.
+            options:
+              values:
+                - name: draft
+                  label: Draf — belum tampil di website
+                - name: published
+                  label: Publikasi — tampil di website
+          - name: type
+            label: Format
+            type: select
+            required: true
+            default: article
+            options:
+              values:
+                - name: article
+                  label: Artikel
+                - name: video
+                  label: Video
+          - name: category
+            label: Kategori
+            type: select
+            required: true
+            options:
+              values:
+                - name: hiv-dasar
+                  label: HIV dasar
+                - name: tes-pencegahan
+                  label: Tes & pencegahan
+                - name: pengobatan-uu
+                  label: Pengobatan & U=U
+                - name: stigma-komunikasi
+                  label: Stigma & komunikasi
+                - name: dukungan
+                  label: Dukungan
+                - name: evidence
+                  label: Evidence
+          - name: title
+            label: Judul
+            type: string
+            required: true
+          - name: summary
+            label: Ringkasan
+            type: text
+            required: true
+            description: Satu atau dua kalimat untuk kartu konten dan hasil pencarian.
+            options:
+              minlength: 20
+              maxlength: 300
+          - name: author
+            label: Penulis
+            type: string
+            required: true
+            default: Ruang Tanpa Stigma
+          - name: published_at
+            label: Tanggal publikasi
+            type: date
+            required: false
+            default: ""
+            description: Wajib diisi sebelum status diubah menjadi publikasi.
+            options:
+              time: false
+              format: yyyy-MM-dd
+          - name: reviewed_at
+            label: Terakhir ditinjau
+            type: date
+            required: false
+            default: ""
+            options:
+              time: false
+              format: yyyy-MM-dd
+          - name: reviewer
+            label: Peninjau
+            type: string
+            required: false
+            default: ""
+            description: Jangan mencantumkan nama atau kredensial sebelum peninjauan benar-benar dilakukan.
+          - name: video_url
+            label: Tautan video YouTube
+            type: string
+            required: false
+            default: ""
+            description: Isi hanya untuk format Video. Pemutar menggunakan domain youtube-nocookie.com.
+          - name: body
+            label: Isi
+            type: rich-text
+            required: true
+            options:
+              format: markdown
+              switcher: true
+              media: article_images
+              rename: safe
+              extensions: [jpg, jpeg, png, webp, gif]
+              categories: [image]
+          - name: sources
+            label: Sumber
+            type: object
+            required: false
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - name: label
+                label: Nama sumber
+                type: string
+                required: true
+              - name: url
+                label: URL sumber
+                type: string
+                required: true
+                pattern:
+                  regex: "^https?://.+"
+                  message: Gunakan URL lengkap yang dimulai dengan https:// atau http://.

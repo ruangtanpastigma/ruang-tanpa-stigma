@@ -12,11 +12,12 @@
 
 ## Editorial safeguards
 
-- Only records marked `published` are visible to readers.
+- Only records marked `published` are included in the deployed website content file.
 - A U=U explainer is included as a draft example and is deliberately hidden until reviewed.
 - Every article can include sources, a review date, and a reviewer field.
-- The dashboard uses Decap CMS editorial workflow so drafts and reviews can be separated from publication after GitHub authentication is configured.
-- Article bodies are rendered through a deliberately small, escaped Markdown subset to reduce injection risk.
+- The dashboard uses Pages CMS with an explicit `draft` / `published` status and writes changes to GitHub.
+- The public repository remains visible, so drafts must never contain personal, identifiable, or sensitive health information.
+- Article bodies are rendered through a deliberately small, escaped Markdown subset with safe HTTP(S) links and images to reduce injection risk.
 - External source links accept only HTTP or HTTPS; YouTube embeds use the privacy-enhanced domain.
 
 ## Medical content to verify before publication
@@ -31,9 +32,8 @@
 
 ## Technical items before going live
 
-- Replace the OAuth service placeholder in `dist/admin/config.yml`.
-- Configure GitHub Pages to use GitHub Actions and confirm the workflow has Pages deployment permission.
-- Configure and test GitHub OAuth for `/admin/` on the production domain.
+- Install the hosted Pages CMS GitHub App with access limited to this repository, then test create, edit, draft, publish, image upload, and video URL flows.
+- Confirm every dashboard save triggers a successful GitHub Pages deployment and that the deployed `posts.json` excludes draft records.
 - Remove `noindex, nofollow` and update `dist/robots.txt` only after final approval.
 - Add production-domain canonical URLs, `hreflang`, sitemap, Open Graph URL/image, and a custom 404 page.
 - Test at 320 px, 375 px, 768 px, and desktop widths, plus keyboard-only and screen-reader smoke tests.

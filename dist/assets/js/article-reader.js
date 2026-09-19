@@ -18,22 +18,62 @@
     return String(value || '').replace(/[&<>"]/g, function (character) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[character]; });
   }
 
+  function safeUrl(value) {
+    try {
+      const url = new URL(value, window.location.href);
+      return ['http:', 'https:'].includes(url.protocol) ? url.href : '';
+    } catch (error) { return ''; }
+  }
+
+  function emphasis(value) {
+    return escapeHtml(value)
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*([^*]+?)\*/g, '<em>$1</em>')
+      .replace(/_([^_]+?)_/g, '<em>$1</em>');
+  }
+
   function inline(text) {
-    return escapeHtml(text).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    const links = [];
+    const withTokens = String(text || '').replace(/\[([^\]]+)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g, function (match, label, href) {
+      const safeHref = safeUrl(href);
+      if (!safeHref) return label;
+      const token = '\u0000LINK' + links.length + '\u0000';
+      links.push('<a href="' + escapeHtml(safeHref) + '" target="_blank" rel="noopener noreferrer">' + emphasis(label) + '</a>');
+      return token;
+    });
+    return emphasis(withTokens).replace(/\u0000LINK(\d+)\u0000/g, function (match, index) { return links[Number(index)] || ''; });
   }
 
   function markdown(value) {
     const lines = String(value || '').split(/\r?\n/);
-    let html = '', paragraph = [], listOpen = false;
+    let html = '', paragraph = [], listType = '';
     function flushParagraph() { if (paragraph.length) { html += '<p>' + inline(paragraph.join(' ')) + '</p>'; paragraph = []; } }
-    function closeList() { if (listOpen) { html += '</ul>'; listOpen = false; } }
+    function closeList() { if (listType) { html += '</' + listType + '>'; listType = ''; } }
+    function openList(type) { if (listType !== type) { closeList(); html += '<' + type + '>'; listType = type; } }
     lines.forEach(function (line) {
-      if (!line.trim()) { flushParagraph(); closeList(); return; }
-      if (line.startsWith('### ')) { flushParagraph(); closeList(); html += '<h3>' + inline(line.slice(4)) + '</h3>'; return; }
-      if (line.startsWith('## ')) { flushParagraph(); closeList(); html += '<h2>' + inline(line.slice(3)) + '</h2>'; return; }
-      if (line.startsWith('> ')) { flushParagraph(); closeList(); html += '<blockquote>' + inline(line.slice(2)) + '</blockquote>'; return; }
-      if (line.startsWith('- ')) { flushParagraph(); if (!listOpen) { html += '<ul>'; listOpen = true; } html += '<li>' + inline(line.slice(2)) + '</li>'; return; }
-      paragraph.push(line.trim());
+      const trimmed = line.trim();
+      const heading = trimmed.match(/^(#{1,4})\s+(.+)$/);
+      const image = trimmed.match(/^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)$/);
+      const unordered = trimmed.match(/^[-*]\s+(.+)$/);
+      const ordered = trimmed.match(/^\d+\.\s+(.+)$/);
+      if (!trimmed) { flushParagraph(); closeList(); return; }
+      if (image && safeUrl(image[2])) {
+        flushParagraph(); closeList();
+        html += '<figure class="article-media"><img src="' + escapeHtml(safeUrl(image[2])) + '" alt="' + escapeHtml(image[1]) + '" loading="lazy" decoding="async">' +
+          (image[3] ? '<figcaption>' + inline(image[3]) + '</figcaption>' : '') + '</figure>';
+        return;
+      }
+      if (heading) {
+        flushParagraph(); closeList();
+        const tag = heading[1].length <= 2 ? 'h2' : 'h3';
+        html += '<' + tag + '>' + inline(heading[2]) + '</' + tag + '>';
+        return;
+      }
+      if (/^(-{3,}|\*{3,})$/.test(trimmed)) { flushParagraph(); closeList(); html += '<hr>'; return; }
+      if (trimmed.startsWith('> ')) { flushParagraph(); closeList(); html += '<blockquote>' + inline(trimmed.slice(2)) + '</blockquote>'; return; }
+      if (unordered) { flushParagraph(); openList('ul'); html += '<li>' + inline(unordered[1]) + '</li>'; return; }
+      if (ordered) { flushParagraph(); openList('ol'); html += '<li>' + inline(ordered[1]) + '</li>'; return; }
+      paragraph.push(trimmed);
     });
     flushParagraph(); closeList();
     return html;

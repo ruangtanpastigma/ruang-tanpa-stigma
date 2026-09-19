@@ -12,7 +12,7 @@ A bilingual, mobile-first static website built with semantic HTML, CSS, and mini
 - Tentang & public-health portfolio / About & public-health portfolio
 - Search and category/format filters for the content library
 - Individual article/video pages with native sharing and copy-link controls
-- Decap CMS writing dashboard at `/admin/`
+- Pages CMS writing dashboard, introduced through `/admin/`
 - Draft and published content states; drafts never appear in the public library
 - GitHub Pages deployment workflow for the `dist` directory
 - Responsive navigation, keyboard-visible focus, skip links, semantic landmarks, and reduced-motion support
@@ -31,17 +31,20 @@ Open `http://localhost:8000/dist/`. Opening HTML files directly with `file://` w
 
 ## Writing and publishing content
 
-The production editorial dashboard will be at `https://ruangtanpastigma.github.io/ruang-tanpa-stigma/admin/`. It edits `dist/content/posts.json` in the GitHub repository.
+The editorial entry page is `https://ruangtanpastigma.github.io/ruang-tanpa-stigma/admin/`. The hosted Pages CMS editor reads `.pages.yml` and edits `dist/content/posts.json` directly in GitHub.
 
-Before the dashboard can sign in:
+First-time setup:
 
-1. Replace the remaining OAuth service placeholder in `dist/admin/config.yml`.
-2. Give the selected GitHub account push access to the repository.
-3. Configure a GitHub-compatible OAuth provider for Decap CMS. Never place a GitHub client secret in this repository.
-4. Keep new content as `draft` while writing. Change it to `published` only after editorial and, when clinical, professional review.
-5. Push the change. The Pages workflow deploys the `dist` directory after GitHub Pages is configured to use GitHub Actions.
+1. Open `/admin/` and select **Buka Ruang Tulis**.
+2. Sign in with the GitHub account that owns this repository.
+3. Install or configure the Pages CMS GitHub App, granting it access only to `ruangtanpastigma/ruang-tanpa-stigma`.
+4. Open the repository and choose **Artikel & Video**.
+5. Add or edit a list item, keep its status as `draft` while working, and change it to `published` only after editorial and, for clinical content, professional review.
+6. Save. The change is committed to `main`; the GitHub Pages workflow updates the public site automatically.
 
-Videos use a YouTube URL and are embedded with YouTube's privacy-enhanced `youtube-nocookie.com` domain. Images uploaded in the CMS are stored under `dist/assets/uploads/`. The current article template intentionally avoids collecting reader data, comments, accounts, or health forms.
+The deployment workflow removes `draft` records from the public website artifact. The source repository itself is public, however, so drafts must never contain personal, identifiable, or sensitive health information.
+
+Videos use a YouTube URL and are embedded with YouTube's privacy-enhanced `youtube-nocookie.com` domain. Images uploaded in the editor are stored under `dist/assets/uploads/`. Article Markdown is escaped and supports headings, lists, emphasis, links, quotes, horizontal rules, and standalone images. The site intentionally avoids collecting reader data, comments, accounts, or health forms.
 
 ## Publication gate
 

@@ -25,10 +25,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v5
+      - name: Prepare public site
+        run: |
+          mkdir -p _site
+          cp -a dist/. _site/
+          jq '{posts: [.posts[] | select(.status == "published")]}' dist/content/posts.json > _site/content/posts.json
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: _site
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
