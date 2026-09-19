@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1000" viewBox="0 0 1440 1000">
+  <rect width="1440" height="1000" fill="#fffdf8"/>
+  <rect width="1440" height="88" fill="#fffdf8"/>
+  <line x1="0" y1="87" x2="1440" y2="87" stroke="#c9cdbf"/>
+  <circle cx="82" cy="44" r="27" fill="#5f7658"/>
+  <text x="124" y="53" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#343d2d">Ruang Tanpa Stigma</text>
+  <text x="570" y="51" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#343d2d">Beranda</text>
+  <text x="645" y="51" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#343d2d">Belajar HIV</text>
+  <text x="740" y="51" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#343d2d">Artikel &amp; Video</text>
+  <text x="865" y="51" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#343d2d">Mitos &amp; Fakta</text>
+  <text x="980" y="51" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#343d2d">Untuk Kamu</text>
+  <text x="1080" y="51" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#343d2d">Tentang</text>
+  <line x1="1150" y1="28" x2="1150" y2="60" stroke="#c9cdbf"/>
+  <text x="1172" y="51" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#a84539">ID</text>
+  <text x="1205" y="51" font-family="Arial, sans-serif" font-size="14" fill="#626a5d">| EN</text>
+
+  <rect y="88" width="1440" height="650" fill="#f7f0e4"/>
+  <line x1="94" y1="195" x2="125" y2="195" stroke="#a84539" stroke-width="3"/>
+  <text x="140" y="202" font-family="Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="2" fill="#a84539">EDUKASI · DUKUNGAN · KOMUNITAS</text>
+  <text x="94" y="300" font-family="Georgia, serif" font-size="68" font-weight="700" fill="#343d2d">HIV tidak mengurangi</text>
+  <text x="94" y="382" font-family="Georgia, serif" font-size="68" font-weight="700" fill="#343d2d">nilai seseorang.</text>
+  <text x="94" y="447" font-family="Arial, sans-serif" font-size="22" fill="#41483d">Ruang untuk memahami HIV melalui informasi yang dapat dipercaya,</text>
+  <text x="94" y="480" font-family="Arial, sans-serif" font-size="22" fill="#41483d">percakapan yang lebih manusiawi, dan dukungan tanpa penghakiman.</text>
+  <rect x="94" y="525" width="154" height="54" rx="9" fill="#343d2d"/>
+  <text x="124" y="560" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#fff">Mulai belajar</text>
+  <rect x="264" y="525" width="150" height="54" rx="9" fill="none" stroke="#343d2d"/>
+  <text x="304" y="560" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#343d2d">Tentang</text>
+  <text x="94" y="635" font-family="Georgia, serif" font-size="20" font-style="italic" fill="#46543d">Pahami HIV. Dukung sesama. Tanpa stigma.</text>
+  <circle cx="1120" cy="408" r="212" fill="#fff" stroke="#c9cdbf" stroke-width="2"/>
+  <circle cx="1120" cy="408" r="195" fill="#5f7658"/>
+  <text x="1120" y="405" text-anchor="middle" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#fff">OFFICIAL</text>
+  <text x="1120" y="440" text-anchor="middle" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#fff">LOGO</text>
+
+  <line x1="94" y1="820" x2="125" y2="820" stroke="#a84539" stroke-width="3"/>
+  <text x="140" y="827" font-family="Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="2" fill="#a84539">MULAI DARI KEBUTUHANMU</text>
+  <text x="94" y="905" font-family="Georgia, serif" font-size="51" font-weight="700" fill="#343d2d">Mungkin kamu datang ke sini karena…</text>
+  <rect x="94" y="950" width="398" height="34" rx="8" fill="#edf0e9" stroke="#d2d7ca"/>
+  <rect x="516" y="950" width="398" height="34" rx="8" fill="#f7f0e4" stroke="#d2d7ca"/>
+  <rect x="938" y="950" width="398" height="34" rx="8" fill="#fffdf8" stroke="#d2d7ca"/>
+</svg>
