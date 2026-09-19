@@ -1,2 +1,5 @@
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /admin/
+
+Sitemap: https://ruangtanpastigma.github.io/ruang-tanpa-stigma/sitemap.xml

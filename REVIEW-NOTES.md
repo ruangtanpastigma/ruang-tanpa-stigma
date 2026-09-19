@@ -34,7 +34,7 @@
 
 - Install the hosted Pages CMS GitHub App with access limited to this repository, then test create, edit, draft, publish, image upload, and video URL flows.
 - Confirm every dashboard save triggers a successful GitHub Pages deployment and that the deployed `posts.json` excludes draft records.
-- Remove `noindex, nofollow` and update `dist/robots.txt` only after final approval.
+- Public indexing was enabled after owner approval on 19 September 2026; keep `/admin/` excluded from indexing.
 - Add production-domain canonical URLs, `hreflang`, sitemap, Open Graph URL/image, and a custom 404 page.
 - Test at 320 px, 375 px, 768 px, and desktop widths, plus keyboard-only and screen-reader smoke tests.
 

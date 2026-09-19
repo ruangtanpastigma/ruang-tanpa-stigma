@@ -17,7 +17,7 @@ A bilingual, mobile-first static website built with semantic HTML, CSS, and mini
 - GitHub Pages deployment workflow for the `dist` directory
 - Responsive navigation, keyboard-visible focus, skip links, semantic landmarks, and reduced-motion support
 - Official logo supplied by the project owner; it has not been redrawn or altered
-- `noindex` metadata and a restrictive `robots.txt` while review is incomplete
+- Public indexing enabled with a sitemap; the writing dashboard remains excluded from search engines
 
 ## Run locally
 
@@ -50,8 +50,8 @@ Videos use a YouTube URL and are embedded with YouTube's privacy-enhanced `youtu
 
 1. Have a qualified Indonesian HIV clinician or public-health reviewer approve all clinical wording and the current Indonesian care pathway.
 2. Confirm current Kementerian Kesehatan guidance and verified local testing, PrEP, PEP, ART, viral-load, CD4, and support-service information.
-3. Replace prototype `noindex` settings and the restrictive `robots.txt` only after approval.
-4. Add the production domain and then add canonical URLs, `hreflang`, sitemap URLs, and social-preview metadata.
+3. Keep `/admin/` excluded from indexing and update the sitemap whenever public URLs change.
+4. If a custom production domain is added, update canonical URLs, `hreflang`, sitemap URLs, and social-preview metadata.
 5. Run a final WCAG 2.2 AA audit with automated and keyboard/manual testing.
 
 No analytics, forms, tracking, accounts, database, testimonials, partners, or fabricated impact claims are included.
