@@ -2,7 +2,7 @@
 
 Target: WCAG 2.2 Level AA
 
-Audit date: 19 September 2026
+Audit date: 19–20 September 2026
 
 Browser smoke test: 20 September 2026
 
@@ -25,6 +25,7 @@ This document records alignment work and remaining tests. It is not a formal acc
 - Repository checks for duplicate IDs, missing page language/title/description, missing image alt attributes, broken internal references, and JSON validity are included in the V2 validation process.
 - Browser smoke test of all 20 public ID/EN routes on the immutable V2 branch preview: one rendered H1 per route, main and skip-link presence, no broken images, no horizontal overflow at the tested desktop viewport, and successful loading of both published article libraries and article readers.
 - Interaction smoke test of article search/category filters and the paired ID–EN article switch, including dynamic title, canonical URL, and review-status rendering.
+- Static checks for the official email and Instagram links on all 20 public ID/EN pages, including accessible names, new-tab context and secure external-link attributes.
 
 Not yet completed: a full screen-reader session on real assistive technology, automated browser audit with axe/Lighthouse against every route, and a multi-device user test.
 
@@ -62,11 +63,12 @@ Focus indicators use a 3 px coral outline with 4 px offset. Focus visibility sti
 | Images | Wordmark logo appeared next to equivalent text; hero logo conveyed brand identity. | Wordmark logo keeps empty alt to avoid repetition; meaningful hero logo retains descriptive alt; intrinsic dimensions reduce layout shift. | Implemented |
 | Icon text | Menu and decorative content symbols could add noise. | Decorative symbols use `aria-hidden="true"`. | Implemented |
 | Link purpose | Core links are descriptive. | Policy, privacy, impact and pathway links use destination-specific labels. | Implemented |
+| Contact links | Email and Instagram needed clear context without icon-only controls. | Added visible text labels, descriptive accessible names, 44 px minimum link height in the footer, and a screen-reader new-tab notice for Instagram. | Implemented |
 | Reduced motion | Existing stylesheet disabled smooth scrolling/transitions. | Preserved `prefers-reduced-motion` support. | Implemented |
 | Forced colors | Custom colors could lose meaning in forced-colors mode. | Added a restrained forced-colors rule for decorative rules and button boundaries. | Implemented; manual test remains |
 | Text scaling | Clamp-based typography and responsive grids generally reflow. | Added no fixed content heights; policy and founder layouts stack before desktop. | Implemented; verify at 200% and 400% zoom |
 | Video embeds | Embedded iframes had title and lazy loading. | Preserved titles, privacy-enhanced YouTube domain and responsive aspect ratio. | Implemented; keyboard/player behavior depends on YouTube |
-| New windows | Source and LinkedIn links use `target="_blank"`. | `rel="noopener noreferrer"` added on revised pages. | Security fix implemented; visible new-window notice is not yet consistent |
+| New windows | Source, LinkedIn and Instagram links use `target="_blank"`. | Contact Instagram links use `rel="me noopener noreferrer"` and include a screen-reader new-tab notice. Existing source and LinkedIn links retain secure relationship attributes. | Contact links implemented; visible notices remain inconsistent on some older source links |
 | Content authoring | Uploaded images may lack useful alt text and article headings can be misused. | Editorial checklist now requires alt text and heading review. | Process control; CMS validation could be strengthened later |
 
 ## WCAG-oriented checklist

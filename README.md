@@ -111,6 +111,13 @@ YouTube videos use `youtube-nocookie.com`. Opening a page with an embedded video
 
 The public website currently has no project-installed analytics, forms, comments, reader accounts, or marketing trackers. See the public Privacy & Ethics page before adding any data collection.
 
+## Official project contact
+
+- Email: [ruangtanpastigma@gmail.com](mailto:ruangtanpastigma@gmail.com)
+- Instagram: [@ruang_tanpa_stigma](https://www.instagram.com/ruang_tanpa_stigma/)
+
+These channels are for general project communication, content corrections, and appropriate educational collaboration enquiries. They are not clinical services. Do not send HIV status, laboratory results, sexual history, medication details, or other sensitive health information.
+
 ## Internal documentation
 
 - `docs/implementation-summary.md` — pre-edit audit and decisions
@@ -124,9 +131,9 @@ The public website currently has no project-installed analytics, forms, comments
 - `CHANGELOG.md` — meaningful website and editorial changes
 - `REVIEW-NOTES.md` — release-readiness notes
 
-## Before merging V2 to `main`
+## Release and ongoing quality checklist
 
-1. Have a qualified Indonesian HIV clinician or public-health reviewer assess all substantive clinical wording in both languages.
+1. Record the current independent clinical/public-health review status accurately. Until qualified review is completed, do not imply that it has occurred.
 2. Reconfirm the currently applicable Indonesian guidance, including testing, confirmatory pathways, PrEP, PEP, ART, viral load, CD4, pregnancy, infant feeding, and service availability.
 3. Complete the manual accessibility tests in `docs/accessibility-audit.md`.
 4. Run the user-testing plan with representative users when available and fix critical/high issues.

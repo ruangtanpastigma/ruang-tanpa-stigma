@@ -83,6 +83,8 @@ See `docs/accessibility-audit.md` for the full matrix.
 ## Privacy and analytics
 
 - No analytics, contact form, newsletter, comments, reader accounts or health-data collection were added.
+- The official project email and Instagram are available on About/Tentang and in every public footer; contact remains voluntary and uses external providers.
+- Privacy pages explain that Instagram/Meta and email providers apply their own policies, that project email is not represented as encrypted or medically confidential, and that sensitive health information should not be sent.
 - YouTube embeds use the privacy-enhanced domain but are transparently described as an external service.
 - Initial M&E can use manual trackers and aggregate platform data.
 - Any analytics installation requires a separate needs/privacy assessment, approval and policy update.
