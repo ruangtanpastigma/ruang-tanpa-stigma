@@ -25,6 +25,19 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v5
+      - name: Validate editorial publication gates
+        run: |
+          jq -e '.posts | type == "array"' dist/content/posts.json > /dev/null
+          invalid_dates=$(jq '[.posts[] | select(.status == "published" and ((.published_at // "") == "" or (.reviewed_at // "") == ""))] | length' dist/content/posts.json)
+          invalid_clinical=$(jq '[.posts[] | select(.status == "published" and .clinical_review_needed == true and (.review_status != "independently_reviewed" or (.reviewer // "") == ""))] | length' dist/content/posts.json)
+          if [ "$invalid_dates" -gt 0 ]; then
+            echo "Published content must include publication and review dates."
+            exit 1
+          fi
+          if [ "$invalid_clinical" -gt 0 ]; then
+            echo "Clinical content cannot be published before a completed independent review is recorded."
+            exit 1
+          fi
       - name: Prepare public site
         run: |
           mkdir -p _site

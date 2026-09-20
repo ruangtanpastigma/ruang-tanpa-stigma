@@ -1,57 +1,148 @@
-# Ruang Tanpa Stigma — Publish-ready prototype
+# Ruang Tanpa Stigma
 
-A bilingual, mobile-first static website built with semantic HTML, CSS, and minimal vanilla JavaScript. Bahasa Indonesia is the default language and English is available through the ID | EN switch.
+Ruang Tanpa Stigma is an independent Indonesian digital public-health initiative focused on understandable HIV education, stigma reduction, treatment literacy, supportive communication, and evidence-informed health information.
 
-## Included
+**Core message:** HIV tidak mengurangi nilai seseorang.
 
-- Beranda / Home
-- Belajar HIV / Learn About HIV
-- Artikel & Video / Articles & Video
-- Mitos & Fakta / Myths & Facts
-- Untuk Kamu / For You
-- Tentang & public-health portfolio / About & public-health portfolio
-- Search and category/format filters for the content library
-- Individual article/video pages with native sharing and copy-link controls
-- Pages CMS writing dashboard, introduced through `/admin/`
-- Draft and published content states; drafts never appear in the public library
-- GitHub Pages deployment workflow for the `dist` directory
-- Responsive navigation, keyboard-visible focus, skip links, semantic landmarks, and reduced-motion support
-- Official logo supplied by the project owner; it has not been redrawn or altered
-- Public indexing enabled with a sitemap; the writing dashboard remains excluded from search engines
+**Tagline:** Pahami HIV. Dukung sesama. Tanpa stigma.
+
+**Descriptor:** Edukasi · Dukungan · Komunitas
+
+This repository contains a bilingual, mobile-first static website. Bahasa Indonesia is the primary language and a complete English version is available through the ID | EN switch.
+
+## Public positioning
+
+Ruang Tanpa Stigma is the project. Sifa Abdul Rijman is acknowledged on the About page as **Founder & Project Lead**. The website is not presented as a personal CV, registered NGO, clinical service, diagnostic provider, or emergency service.
+
+No impact, partnership, programme, event, audience, or health-outcome claim should be published without real evidence.
+
+## Architecture
+
+- Semantic HTML in `dist/`
+- One shared stylesheet: `dist/assets/css/main.css`
+- Small vanilla JavaScript modules for navigation, content filtering, and article reading
+- JSON content library: `dist/content/posts.json`
+- Pages CMS configuration: `.pages.yml`
+- GitHub Pages deployment: `.github/workflows/pages.yml`
+- No React, Next.js, database, reader accounts, comments, health forms, or project-installed analytics
+
+The static architecture is intentional: fast, low-cost, privacy-conscious, GitHub Pages compatible, and maintainable without a software-development team.
+
+## Public pages
+
+### Bahasa Indonesia
+
+- `/` — Beranda
+- `/belajar-hiv/` — Belajar HIV
+- `/mitos-fakta/` — Mitos & Fakta
+- `/untuk-kamu/` — Untuk Kamu
+- `/artikel/` — Artikel & Video
+- `/tentang/` — Tentang
+- `/standar-editorial/` — Standar Editorial & Evidence
+- `/privasi-etika/` — Privasi & Etika
+- `/dampak/` — Dampak
+
+### English
+
+- `/en/` — Home
+- `/en/learn/` — Learn About HIV
+- `/en/myths-facts/` — Myths & Facts
+- `/en/for-you/` — For You
+- `/en/stories/` — Articles & Video
+- `/en/about/` — About
+- `/en/editorial-policy/` — Editorial & Evidence Policy
+- `/en/privacy-ethics/` — Privacy & Ethics
+- `/en/impact/` — Our Impact
+
+Existing V1 URLs are preserved.
 
 ## Run locally
 
-Serve the repository root with any local static server, then open the `dist` directory. For example:
+Serve the repository root, then open the `dist` directory:
 
 ```sh
 python3 -m http.server 8000
 ```
 
-Open `http://localhost:8000/dist/`. Opening HTML files directly with `file://` will prevent the browser from loading the JSON content library.
+Open `http://localhost:8000/dist/`. Do not open files directly with `file://`; the browser would block the JSON content request.
 
-## Writing and publishing content
+## Editorial dashboard
 
-The editorial entry page is `https://ruangtanpastigma.github.io/ruang-tanpa-stigma/admin/`. The hosted Pages CMS editor reads `.pages.yml` and edits `dist/content/posts.json` directly in GitHub.
+The editorial entry page is `/admin/`. It links to Pages CMS, which reads `.pages.yml` and edits `dist/content/posts.json` in GitHub.
 
-First-time setup:
+### Add an article or video
 
 1. Open `/admin/` and select **Buka Ruang Tulis**.
-2. Sign in with the GitHub account that owns this repository.
-3. Install or configure the Pages CMS GitHub App, granting it access only to `ruangtanpastigma/ruang-tanpa-stigma`.
-4. Open the repository and choose **Artikel & Video**.
-5. Add or edit a list item, keep its status as `draft` while working, and change it to `published` only after editorial and, for clinical content, professional review.
-6. Save. The change is committed to `main`; the GitHub Pages workflow updates the public site automatically.
+2. Sign in with the GitHub account that has repository access.
+3. Open **Artikel & Video**.
+4. Create a new item and leave `Status` as `draft` while writing.
+5. Fill in the matching-language slug, language, format, category, title, summary, author, body, and sources.
+6. Choose the review status that reflects work actually completed.
+7. Mark `Memerlukan tinjauan klinis/kesehatan publik` for clinical or safety content.
+8. Add a clinical/public-health reviewer only after a real independent review is complete.
+9. Add publication and review dates before selecting `published`.
+10. Save and verify the GitHub Pages workflow.
 
-The deployment workflow removes `draft` records from the public website artifact. The source repository itself is public, however, so drafts must never contain personal, identifiable, or sensitive health information.
+Drafts do not appear in the deployed content library. The repository is public, so drafts must never contain personal, identifiable, or sensitive health information.
 
-Videos use a YouTube URL and are embedded with YouTube's privacy-enhanced `youtube-nocookie.com` domain. Images uploaded in the editor are stored under `dist/assets/uploads/`. Article Markdown is escaped and supports headings, lists, emphasis, links, quotes, horizontal rules, and standalone images. The site intentionally avoids collecting reader data, comments, accounts, or health forms.
+## Publication safeguards
 
-## Publication gate
+The deployment workflow validates that:
 
-1. Have a qualified Indonesian HIV clinician or public-health reviewer approve all clinical wording and the current Indonesian care pathway.
-2. Confirm current Kementerian Kesehatan guidance and verified local testing, PrEP, PEP, ART, viral-load, CD4, and support-service information.
-3. Keep `/admin/` excluded from indexing and update the sitemap whenever public URLs change.
-4. If a custom production domain is added, update canonical URLs, `hreflang`, sitemap URLs, and social-preview metadata.
-5. Run a final WCAG 2.2 AA audit with automated and keyboard/manual testing.
+- every published article has a publication date and review date;
+- content marked as requiring clinical review cannot be published unless its review status is `independently_reviewed` and a real reviewer is recorded;
+- only published records are copied into the public deployment artifact.
 
-No analytics, forms, tracking, accounts, database, testimonials, partners, or fabricated impact claims are included.
+Major static medical pages are tracked separately in `docs/content-quality-tracker.csv`; they currently state that sources were checked but independent clinical review has not yet occurred.
+
+## Review statuses
+
+- `draft` — review incomplete
+- `source_checked` — sources opened and checked
+- `editorial_reviewed` — language, structure and sources reviewed; not a clinical review
+- `needs_clinical_review` — clinical/public-health review required
+- `independently_reviewed` — genuine independent review completed
+
+Do not use `independently_reviewed` without a qualified reviewer and a completed review.
+
+## Video and privacy
+
+YouTube videos use `youtube-nocookie.com`. Opening a page with an embedded video can still cause the browser to communicate with YouTube; privacy-enhanced mode is not a guarantee of no data exchange.
+
+The public website currently has no project-installed analytics, forms, comments, reader accounts, or marketing trackers. See the public Privacy & Ethics page before adding any data collection.
+
+## Official project contact
+
+- Email: [ruangtanpastigma@gmail.com](mailto:ruangtanpastigma@gmail.com)
+- Instagram: [@ruang_tanpa_stigma](https://www.instagram.com/ruang_tanpa_stigma/)
+
+These channels are for general project communication, content corrections, and appropriate educational collaboration enquiries. They are not clinical services. Do not send HIV status, laboratory results, sexual history, medication details, or other sensitive health information.
+
+## Internal documentation
+
+- `docs/implementation-summary.md` — pre-edit audit and decisions
+- `docs/editorial-governance.md` — roles, statuses, workflow, publication checklist
+- `docs/accessibility-audit.md` — WCAG 2.2 AA-oriented audit and remaining manual tests
+- `docs/user-testing-plan.md` — 5–10 user usability-testing plan
+- `docs/monitoring-evaluation-framework.md` — 12-month M&E framework
+- `docs/monthly-impact-tracker.csv` — reusable monthly tracker
+- `docs/content-quality-tracker.csv` — source/review tracker
+- `docs/impact-tracker.md` — tracker definitions and monthly process
+- `CHANGELOG.md` — meaningful website and editorial changes
+- `REVIEW-NOTES.md` — release-readiness notes
+
+## Release and ongoing quality checklist
+
+1. Record the current independent clinical/public-health review status accurately. Until qualified review is completed, do not imply that it has occurred.
+2. Reconfirm the currently applicable Indonesian guidance, including testing, confirmatory pathways, PrEP, PEP, ART, viral load, CD4, pregnancy, infant feeding, and service availability.
+3. Complete the manual accessibility tests in `docs/accessibility-audit.md`.
+4. Run the user-testing plan with representative users when available and fix critical/high issues.
+5. Test Pages CMS create, edit, draft, review, publish, image upload, translation pairing, and video flows.
+6. Verify all internal links, sitemap URLs, canonical/hreflang pairs, JSON and deployment gates.
+7. Review the branch diff and merge only after owner approval.
+
+## Deployment
+
+GitHub Pages deploys only from pushes to `main` or a manual workflow dispatch. Work on `public-health-v2` does not change the live production website until the branch is reviewed and merged.
+
+If a custom domain is introduced later, update canonical URLs, `hreflang`, Open Graph URLs/images, robots.txt and sitemap.xml before switching domains.

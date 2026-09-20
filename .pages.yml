@@ -41,6 +41,12 @@ content:
                   label: Bahasa Indonesia
                 - name: en
                   label: English
+          - name: translation_slug
+            label: Slug versi bahasa lain
+            type: string
+            required: false
+            default: ""
+            description: Isi dengan slug artikel pasangannya agar sakelar ID | EN dapat menuju konten yang sama.
           - name: status
             label: Status
             type: select
@@ -53,6 +59,30 @@ content:
                   label: Draf — belum tampil di website
                 - name: published
                   label: Publikasi — tampil di website
+          - name: review_status
+            label: Status tinjauan
+            type: select
+            required: true
+            default: source_checked
+            description: Status harus mencerminkan pemeriksaan yang benar-benar sudah dilakukan.
+            options:
+              values:
+                - name: draft
+                  label: Draf — pemeriksaan belum selesai
+                - name: source_checked
+                  label: Sumber diperiksa
+                - name: editorial_reviewed
+                  label: Ditinjau editorial — bukan tinjauan klinis
+                - name: needs_clinical_review
+                  label: Memerlukan tinjauan klinis/kesehatan publik
+                - name: independently_reviewed
+                  label: Ditinjau independen — hanya setelah benar-benar selesai
+          - name: clinical_review_needed
+            label: Memerlukan tinjauan klinis/kesehatan publik
+            type: boolean
+            required: true
+            default: false
+            description: Aktifkan untuk konten klinis atau keselamatan. Workflow deployment akan menolak publikasi sebelum tinjauan independen selesai dan peninjau dicantumkan.
           - name: type
             label: Format
             type: select
@@ -116,12 +146,21 @@ content:
             options:
               time: false
               format: yyyy-MM-dd
+          - name: next_review_at
+            label: Tinjauan berikutnya
+            type: date
+            required: false
+            default: ""
+            description: Gunakan siklus editorial yang nyata; jangan menambahkan tanggal tanpa rencana tinjauan.
+            options:
+              time: false
+              format: yyyy-MM-dd
           - name: reviewer
-            label: Peninjau
+            label: Peninjau klinis/kesehatan publik
             type: string
             required: false
             default: ""
-            description: Jangan mencantumkan nama atau kredensial sebelum peninjauan benar-benar dilakukan.
+            description: Kosongkan jika belum ada tinjauan independen. Jangan mencantumkan nama, gelar, kredensial, atau afiliasi sebelum peninjauan benar-benar dilakukan.
           - name: video_url
             label: Tautan video YouTube
             type: string
