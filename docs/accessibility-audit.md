@@ -4,6 +4,8 @@ Target: WCAG 2.2 Level AA
 
 Audit date: 19 September 2026
 
+Browser smoke test: 20 September 2026
+
 Scope: public ID/EN pages, article library/reader, mobile navigation, shared CSS/JavaScript
 
 Status: code review and automated repository checks completed for V2; device and assistive-technology testing remains required
@@ -21,6 +23,8 @@ This document records alignment work and remaining tests. It is not a formal acc
 - Review of dynamic article rendering, search/filter controls, native share/copy controls, and live status messages.
 - Review of reduced-motion and forced-colors CSS.
 - Repository checks for duplicate IDs, missing page language/title/description, missing image alt attributes, broken internal references, and JSON validity are included in the V2 validation process.
+- Browser smoke test of all 20 public ID/EN routes on the immutable V2 branch preview: one rendered H1 per route, main and skip-link presence, no broken images, no horizontal overflow at the tested desktop viewport, and successful loading of both published article libraries and article readers.
+- Interaction smoke test of article search/category filters and the paired ID–EN article switch, including dynamic title, canonical URL, and review-status rendering.
 
 Not yet completed: a full screen-reader session on real assistive technology, automated browser audit with axe/Lighthouse against every route, and a multi-device user test.
 
